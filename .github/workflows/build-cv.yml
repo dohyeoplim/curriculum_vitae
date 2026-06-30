@@ -17,6 +17,9 @@ jobs:
     container:
       image: texlive/texlive:latest
     steps:
+      - name: Mark workspace as safe for git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -38,7 +41,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to the PDF."
           else
-            git commit -m "ci: rebuild Dohyeop_Lim.pdf [skip ci]"
+            git commit -m "ci: rebuild pdf"
             git push
           fi
 
