@@ -1,0 +1,19 @@
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{hyperref}
+\hypersetup{colorlinks=false, pdfborder={0 0 0}}
+
+\setstretch{1}
+
+\titleformat{\section}{\large\scshape}{}{0em}{}[\vspace{3pt}\hrule]
+\titlespacing{\section}{0pt}{18pt}{10pt}
+
+\setlist[itemize]{leftmargin=1.3em, itemsep=4pt, topsep=4pt, parsep=0pt}
+\setlist[enumerate]{leftmargin=1.6em, itemsep=4pt, topsep=4pt, parsep=0pt}
+\setlength{\parindent}{0pt}
+
+\newcommand{\entry}[4]{%
+  \textbf{#1}\hfill #2\\[2pt]
+  \textit{#3}\hfill \textit{#4}\par\vspace{6pt}}
