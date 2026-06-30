@@ -1,0 +1,44 @@
+name: Build CV
+
+on:
+  push:
+    paths:
+      - "**.tex"
+      - "sections/**"
+      - ".github/workflows/build-cv.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile with XeLaTeX
+        run: |
+          latexmk -xelatex -interaction=nonstopmode -halt-on-error -jobname=Dohyeop_Lim cv.tex
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dohyeop_Lim
+          path: Dohyeop_Lim.pdf
+
+      - name: Commit PDF back to repo
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f Dohyeop_Lim.pdf
+          if git diff --staged --quiet; then
+            echo "No changes to the PDF."
+          else
+            git commit -m "ci: rebuild Dohyeop_Lim.pdf [skip ci]"
+            git push
+          fi
+
