@@ -1,51 +1,109 @@
-\usepackage[top=1in, bottom=1in, left=0.9in, right=0.9in]{geometry}
+\usepackage[
+  top=0.85in,
+  bottom=0.85in,
+  left=0.85in,
+  right=0.85in
+]{geometry}
+
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{setspace}
 \usepackage{hyperref}
 \usepackage{xcolor}
-\hypersetup{colorlinks=false, pdfborder={0 0 0}}
 
-\setstretch{1.2}
+% ---------- Colors ----------
+\definecolor{accent}{HTML}{526FA5}
+\definecolor{muted}{HTML}{7A8088}
+\definecolor{rulecolor}{HTML}{DCE3EC}
 
-\titleformat{\section}{\normalsize\bfseries}{}{0em}{}[\vspace{3pt}\hrule]
-\titlespacing{\section}{0pt}{14pt}{6pt}
-
-\setlist[itemize]{leftmargin=1.3em, itemsep=2pt, topsep=2pt, parsep=0pt}
-\setlist[enumerate]{leftmargin=1.6em, itemsep=2pt, topsep=2pt, parsep=0pt}
-\setlength{\parindent}{0pt}
-
-\newcommand{\metadata}[1]{{\color{black!60}#1}}
-
-\newcommand{\entrylayout}[4]{
-  #1\hfill \metadata{#2}\\[1pt]
-  {\small #3\hfill \metadata{#4}}\par\vspace{4pt}
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accent,
+  linkcolor=accent
 }
 
-\newcommand{\entry}[4]{
+% ---------- Typography ----------
+\setstretch{1.3}
+\setlength{\parindent}{0pt}
+
+% ---------- Sections ----------
+\titleformat{\section}
+  {\normalsize\bfseries\color{accent}}
+  {}
+  {0em}
+  {}
+  [\vspace{3pt}\color{rulecolor}\titlerule]
+
+\titlespacing{\section}
+  {0pt}
+  {13pt}
+  {6pt}
+
+% ---------- Lists ----------
+\setlist[itemize]{
+  leftmargin=1.25em,
+  itemsep=3pt,
+  topsep=2pt,
+  parsep=0pt
+}
+
+\setlist[enumerate]{
+  leftmargin=1.5em,
+  itemsep=1.5pt,
+  topsep=2pt,
+  parsep=0pt
+}
+
+% ---------- Helpers ----------
+\newcommand{\metadata}[1]{%
+  {\small\color{muted}#1}%
+}
+
+\newcommand{\entrylayout}[4]{%
+  #1\hfill{\small\color{muted}#2}\\[-1pt]
+  {\small #3\hfill{\color{muted}#4}}\par
+  \vspace{3pt}
+}
+
+\newcommand{\entry}[4]{%
   \entrylayout{\textbf{#1}}{#2}{#3}{#4}
 }
 
-\newcommand{\publicationentry}[3]{
-  \begingroup
-  \hyphenpenalty=10000
-  #1\\[1pt]
-  {\small #2\enspace\metadata{#3}}\par\vspace{4pt}
-  \endgroup
+\newcommand{\publicationentry}[4]{%
+  {\small\textbf{#1}}\par
+  \vspace{-2pt}
+  {\footnotesize
+    #2
+    \,\textcolor{rulecolor}{\scriptsize\textbullet}\,
+    \textcolor{accent}{#3}
+  }\par
+  \if\relax\detokenize{#4}\relax
+  \else
+    {\vspace{3pt}
+     \footnotesize
+     \color{muted}
+     \setstretch{1.08}
+     \hangindent=1.2em
+     \hangafter=1
+     {\scriptsize\textbullet}\enspace #4\par}
+  \fi
+  \vspace{5pt}
 }
 
-\newcommand{\dateditem}[2]{
-  \item #1\hfill \metadata{#2}\par
+\newcommand{\dateditem}[2]{%
+  \item #1\hfill\metadata{#2}
 }
 
-\newcommand{\itemdetail}[1]{
-  \vspace{-1pt}{\footnotesize\metadata{#1}\par}
+\newcommand{\itemdetail}[1]{%
+  \vspace{-1pt}
+  {\footnotesize\color{muted}#1\par}
 }
 
-\newcommand{\skillline}[2]{
-  \item{\small{#1:} #2\par}
+\newcommand{\skillline}[2]{%
+  \item {\small\textbf{#1}\enspace
+  \color{muted}#2}
 }
 
 \newenvironment{compactitems}
-  {\small\begin{itemize}[itemsep=1pt, topsep=1pt]}
+  {\small\begin{itemize}[itemsep=0.5pt, topsep=-3pt]}
   {\end{itemize}}
