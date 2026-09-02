@@ -1,4 +1,4 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \input{preamble}
 
 \begin{document}
@@ -7,7 +7,7 @@
     {\LARGE\bfseries Dohyeop Lim}\\[3pt]
     {\small
     Undergraduate Student in Applied Artificial Intelligence
-    }\\[5pt]
+    }\\[3pt]
     {\footnotesize
     \href{mailto:dhlim0817@gmail.com}{dhlim0817@gmail.com}
     \quad\textcolor{rulecolor}{|}\quad
@@ -19,31 +19,60 @@
 
 
 \section{Education}
-\entry{Seoul National University of Science and Technology}{2024 -- Present}
-      {B.Eng. in Applied Artificial Intelligence}{Seoul, Korea}
+\entry{Seoul National University of Science and Technology}{2024 -- Present}{B.Eng. in Applied Artificial Intelligence}{Seoul, Korea}
 
 GPA: 4.34 / 4.5 \;$\cdot$\; 1st in Department
 
 
 \section{Research Experience}
-\entry{Visual Intelligence Lab, SeoulTech}{Dec. 2025 -- Present}
-      {Undergraduate Researcher \textit{(Advisor: Prof. Jongyoul Park)}}{Seoul, Korea}
+\entry{Visual Intelligence Lab, SeoulTech}{Dec. 2025 -- Present}{Undergraduate Researcher \textit{(Advisor: Prof. Jongyoul Park)}}{Seoul, Korea}
 \begin{compactitems}
-  \item Research areas: Vision-Language Models, Generative Models
-  \item Develop methods for cross-document consistency verification and structured
-      identifier recognition as part of a national R\&D project conducted with KETI
-      on automated data preprocessing for industrial AI.
+  \item Conduct research on cross-document consistency verification and structured identifier recognition for a national R\&D project with KETI on automated data preprocessing for industrial AI.
+  \item Develop synthetic document generation methods with dynamic table layouts, structured form templates, and automated tagging for document understanding research.
+  \item Led an 8,000-image annotation project for evaluation dataset construction, including annotator recruitment and deployment of a custom labeling tool.
 \end{compactitems}
 
 
 \section{Publications}
-\publicationentry{E-ACT: Enforcing Arithmetic Constraints in CTC Trellises for Structured Identifier Recognition}{\textbf{Dohyeop Lim}, MinKi Jeong, Jongyoul Park.}{WACV 2027, under review.}{Training-free constrained CTC decoding for industrial identifiers, reliably recovering near-correct OCR predictions using format and checksum rules without retraining existing recognizers.}
-
-% \begin{compactitems}
-% \item\itemdetail{Developed a training-free decoding module for industrial identifier OCR that recovers near-miss predictions using format and checksum rules, improving exact-match accuracy by up to 31.2 pp without retraining existing recognizers.}
-% \end{compactitems}
+\publicationentry{E-ACT: Enforcing Arithmetic Constraints in CTC Trellises for Structured Identifier Recognition}{\textbf{Dohyeop Lim}, MinKi Jeong, Jongyoul Park.}{WACV 2027, under review.}
+{
+\item Developed a factorized CTC decoder that enforces identifier length, allowed characters, and checksum rules during decoding without retraining.
+\item Improved exact-match accuracy by 12.3--31.2 pp across four benchmarks and prevented 89.5--93.6\% of single-edit errors in unconstrained OCR outputs from propagating to final predictions.
+}
 
 \publicationentry{Imagine the Structure Before You Speak: Structural Imagination in Latent Space for Table Recognition}{MinKi Jeong, \textbf{Dohyeop Lim}, Jongyoul Park.}{WACV 2027, under review.}{}
+
+\section{Selected Projects}
+
+\projectentry
+  {Collog}
+  {Jul. -- Aug. 2026}
+  {Turns everyday family calls into actionable health and lifestyle insights for older adults.}
+  {https://github.com/Collog-App}
+  {
+    \item Built a pipeline for transcription, health information extraction, and acoustic analysis from family call audio.
+    \item Tracked changes across calls and generated questions for future conversations based on previous records.
+  }
+
+\projectentry
+  {MochiCall}
+  {Jul. 2026}
+  {Converts spoken requests for cross-regional hospital transportation into dispatch-ready trip records.}
+  {https://github.com/Fresh-Mango-Mochi/welfare-call-asr}
+  {
+    \item Fine-tuned and evaluated domain-specific Korean ASR models using LoRA.
+    \item Combined specialized and multi-domain adapters to improve transcription under domain shift.
+  }
+
+\projectentry
+  {WONNIT}
+  {Jul. -- Sep. 2025}
+  {Supports reliable short-term rentals of idle spaces through automated visual verification.}
+  {https://github.com/GGUNGSIL-WONNIT}
+  {
+    \item Developed models for scene classification, object detection, and before-and-after change detection.
+    \item Converted and deployed the vision models with Core ML for on-device inference on iOS.
+  }
 
 
 \section{Awards \& Honors}
@@ -51,30 +80,35 @@ GPA: 4.34 / 4.5 \;$\cdot$\; 1st in Department
   \dateditem{Academic Excellence Scholarship, SeoulTech}{2024 -- 2026}\par
   \itemdetail{Full tuition for five consecutive semesters}
   \dateditem{Honorable Mention (Overall), 14th LIKELION Univ. Central Hackathon}{Aug. 2026}\par
-  \itemdetail{Selected among 317 teams}
+  \itemdetail{Selected among 317 teams with Collog}
   \dateditem{2nd Place (AAC Track), 14th LIKELION Univ. Central Hackathon}{Aug. 2026}\par
   \itemdetail{Ranked 2nd out of 128 teams}
-  \dateditem{2nd Place, 2026 AICOSS Summer AI SCI Bootcamp Competition}{Jul. 2026}
+  \dateditem{Grand Prize, 2026 AICOSS Summer AI SCI Bootcamp Competition}{Jul. 2026}\par
+  \itemdetail{Awarded for MochiCall}
 \end{itemize}
 
 
 \section{Skills \& Languages}
 \begin{compactitems}
-    \skillline{Programming}{Python, Swift, TypeScript}
-    \skillline{Research}{PyTorch, OpenCV}
-    \skillline{Development}{SwiftUI, Next.js}
-    \skillline{Languages}{Korean (Native), English (TOEFL iBT 100/120, Aug. 2026)}
+  \skillline{Programming}{Python, Swift, TypeScript}
+  \skillline{Machine Learning}{PyTorch, OpenCV}
+  \skillline{Mobile}{SwiftUI}
+  \skillline{Web \& Tools}{Next.js, Docker, Git, \LaTeX}
+  \skillline{Spoken Languages}{Korean (Native), English (TOEFL iBT 100/120, Aug. 2026)}
 \end{compactitems}
 
 
 \section{Additional Experience}
-\begin{compactitems}
-  \dateditem{LIKELION University, SeoulTech}{2025 -- Present}\par
-  \itemdetail{14th Cohort: Vice President}
-  \itemdetail{13th Cohort: Member}
-  \dateditem{Google Developer Groups on Campus, SeoulTech}{2025 -- Present}\par
-  \itemdetail{5th and 6th Cohorts: Core Team Member}
-  \dateditem{Visiting Student, Technische Hochschule Ulm, Germany}{Jan. -- Feb. 2026}
-\end{compactitems}
+\begin{itemize}
+  \dateditem{LIKELION University}{2025 -- Present}\par
+  \itemdetail{Vice President, 14th Cohort; Member, 13th Cohort, SeoulTech Chapter}
+  \itemdetail{Coordinated a 30-member chapter, organized four technical sessions, invited talks, and hackathon programs.}
+  \dateditem{Google Developer Groups on Campus}{2025 -- Present}\par
+  \itemdetail{Core Team Member, 5th and 6th Cohorts, SeoulTech Chapter}
+  \itemdetail{Organized 13 technical sessions for the campus developer community during the 5th cohort.}
+  \dateditem{Visiting Student, Technische Hochschule Ulm, Germany}{Jan. -- Feb. 2026}\par
+  \itemdetail{Completed coursework in Deep Learning for Industrial Data.}
+  \itemdetail{Developed \projectlink{DocFusionX}{https://github.com/DocFusionX/server}, a structure-aware GraphRAG system for reliable reasoning over long documents.}
+\end{itemize}
 
 \end{document}
