@@ -1,6 +1,6 @@
 \usepackage[
-  top=0.85in,
-  bottom=0.85in,
+  top=0.9in,
+  bottom=0.9in,
   left=0.85in,
   right=0.85in
 ]{geometry}
@@ -10,6 +10,7 @@
 \usepackage{setspace}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{fontawesome5}
 
 % ---------- Colors ----------
 \definecolor{accent}{HTML}{526FA5}
@@ -17,9 +18,10 @@
 \definecolor{rulecolor}{HTML}{DCE3EC}
 
 \hypersetup{
-  colorlinks=true,
-  urlcolor=accent,
-  linkcolor=accent
+  % colorlinks=true,
+  % urlcolor=accent,
+  % linkcolor=accent
+  hidelinks
 }
 
 % ---------- Typography ----------
@@ -70,24 +72,33 @@
 }
 
 \newcommand{\publicationentry}[4]{%
-  {\small\textbf{#1}}\par
+  {\footnotesize\textbf{#1}}\par
   \vspace{-2pt}
+
   {\footnotesize
     #2
     \,\textcolor{rulecolor}{\scriptsize\textbullet}\,
     \textcolor{accent}{#3}
   }\par
+
   \if\relax\detokenize{#4}\relax
   \else
-    {\vspace{3pt}
-     \footnotesize
-     \color{muted}
-     \setstretch{1.08}
-     \hangindent=1.2em
-     \hangafter=1
-     {\scriptsize\textbullet}\enspace #4\par}
+    \vspace{2pt}
+    {\footnotesize
+      \color{muted}
+      \setstretch{1.08}
+      \begin{itemize}[
+        leftmargin=1.2em,
+        itemsep=1pt,
+        topsep=0pt,
+        parsep=0pt
+      ]
+        #4
+      \end{itemize}
+    }
   \fi
-  \vspace{5pt}
+
+  \vspace{4pt}
 }
 
 \newcommand{\dateditem}[2]{%
@@ -99,9 +110,48 @@
   {\footnotesize\color{muted}#1\par}
 }
 
+\newcommand{\projectlink}[2]{%
+  \href{#2}{%
+    \textbf{#1}\;\textcolor{accent}{\scriptsize\faIcon{link}}%
+  }%
+}
+
+\newcommand{\projectentry}[5]{%
+  {\footnotesize
+    \href{#4}{\textbf{#1}\, \textcolor{accent}{\scriptsize\faIcon{link}}}
+    \hfill
+    \textcolor{muted}{#2}
+  }\par
+  \vspace{-2pt}
+
+  {\footnotesize #3}\par
+
+  \if\relax\detokenize{#5}\relax
+  \else
+    \vspace{2pt}
+    {\footnotesize
+      \color{muted}
+      \setstretch{1.08}
+      \begin{itemize}[
+        leftmargin=1.2em,
+        itemsep=1pt,
+        topsep=0pt,
+        parsep=0pt
+      ]
+        #5
+      \end{itemize}
+    }
+  \fi
+
+  \vspace{4pt}
+}
+
 \newcommand{\skillline}[2]{%
-  \item {\small\textbf{#1}\enspace
-  \color{muted}#2}
+  \item[]\hspace{-1.25em}%
+  \makebox[11em][l]{%
+    \small\textbf{#1}%
+  }%
+  {\small\color{black!70}#2}%
 }
 
 \newenvironment{compactitems}
