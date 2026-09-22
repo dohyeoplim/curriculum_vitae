@@ -1,160 +1,129 @@
 \usepackage[
-  top=0.9in,
-  bottom=0.9in,
-  left=0.85in,
-  right=0.85in
+  top=0.55in,
+  bottom=0.55in,
+  left=0.68in,
+  right=0.68in
 ]{geometry}
 
-\usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{setspace}
-\usepackage{hyperref}
 \usepackage{xcolor}
-\usepackage{fontawesome5}
+\usepackage{etoolbox}
+\usepackage[letterspace=90]{microtype}
+\usepackage{libertinus}
+\usepackage{hyperref}
 
-% ---------- Colors ----------
-\definecolor{accent}{HTML}{526FA5}
-\definecolor{muted}{HTML}{5A6068}
-\definecolor{rulecolor}{HTML}{DCE3EC}
+\definecolor{accent}{HTML}{7A3B2F}
+\definecolor{muted}{HTML}{3B3733}
+\definecolor{rulegray}{HTML}{938B82}
 
-\hypersetup{
-  % colorlinks=true,
-  % urlcolor=accent,
-  % linkcolor=accent
-  hidelinks
-}
+\hypersetup{hidelinks}
 \pagestyle{empty}
 
-% ---------- Typography ----------
-\setstretch{1.3}
+\setstretch{1.04}
 \setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
 
-% ---------- Sections ----------
-\titleformat{\section}
-  {\normalsize\bfseries\color{accent}}
-  {}
-  {0em}
-  {}
-  [\vspace{3pt}\color{rulecolor}\titlerule]
+\newcommand{\entrylinegap}{\vspace{1.5pt}}
+\newcommand{\cventrygap}{\vspace{6pt}}
+\newcommand{\cvgroupgap}{\vspace{4pt}}
+\newcommand{\cvsectiongap}{\vspace{16pt}}
+\newcommand{\entrymark}{\leavevmode\llap{\raisebox{0.05em}{\scriptsize\textcolor{rulegray}{$\bullet$}}\hspace{5pt}}}
 
-\titlespacing{\section}
-  {0pt}
-  {13pt}
-  {6pt}
-
-% ---------- Lists ----------
 \setlist[itemize]{
-  leftmargin=1.25em,
+  leftmargin=1.05em,
   itemsep=3pt,
-  topsep=2pt,
-  parsep=0pt
+  topsep=1pt,
+  parsep=0pt,
+  partopsep=0pt,
+  label=\textcolor{rulegray}{\textbullet}
 }
 
-\setlist[enumerate]{
-  leftmargin=1.5em,
-  itemsep=1.5pt,
-  topsep=2pt,
-  parsep=0pt
+% #1 name, #2 tagline, #3 contacts
+\newcommand{\cvsep}{\;\textcolor{rulegray}{\textperiodcentered}\;}
+\newcommand{\cvheader}[2]{%
+  \begin{center}
+  \noindent
+  {\Huge #1}\par
+  \vspace{12pt}
+  {\footnotesize\color{muted}#2}\par
+  \textcolor{rulegray}{\rule{\linewidth}{0.5pt}}
+  \end{center}
+  \par
 }
 
-% ---------- Helpers ----------
-\newcommand{\metadata}[1]{%
-  {\small\color{muted}#1}%
+\newenvironment{cvsection}[1]{%
+  \noindent
+  \begin{minipage}[t]{0.17\linewidth}%
+    \vspace{0pt}%
+    \raggedright
+    \setstretch{0.80}%
+    {\footnotesize\scshape\color{accent}\lsstyle #1}%
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.81\linewidth}%
+    \vspace{0pt}%
+}{%
+  \end{minipage}%
+  \par
+  \cvsectiongap
 }
 
-\newcommand{\entrylayout}[4]{%
-  #1\hfill{\small\color{muted}#2}\\[-1pt]
-  {\small #3\hfill{\color{muted}#4}}\par
+\newcommand{\cvsubsection}[1]{%
+  {\scriptsize\scshape\color{muted}\textls[45]{#1}}\par
   \vspace{3pt}
 }
 
-\newcommand{\entry}[4]{%
-  \entrylayout{\textbf{#1}}{#2}{#3}{#4}
-}
-
-\newcommand{\publicationentry}[4]{%
-  {\footnotesize\textbf{#1}}\par
-  \vspace{-2pt}
-
-  {\footnotesize
-    #2
-    \,\textcolor{rulecolor}{\scriptsize\textbullet}\,
-    \textcolor{accent}{#3}
-  }\par
-
-  \if\relax\detokenize{#4}\relax
-  \else
-    \vspace{2pt}
-    {\footnotesize
-      \color{muted}
-      \setstretch{1.08}
-      \begin{itemize}[
-        leftmargin=1.2em,
-        itemsep=1pt,
-        topsep=0pt,
-        parsep=0pt
-      ]
-        #4
-      \end{itemize}
-    }
-  \fi
-
-  \vspace{4pt}
-}
-
-\newcommand{\dateditem}[2]{%
-  \item #1\hfill\metadata{#2}
-}
-
-\newcommand{\itemdetail}[1]{%
-  \vspace{-1pt}
-  {\footnotesize\color{muted}#1\par}
-}
-
-\newcommand{\projectlink}[2]{%
-  \href{#2}{%
-    \textbf{#1}\;\textcolor{accent}{\scriptsize\faIcon{link}}%
+% #1 title, #2 meta, #3 subtitle (optional), #4 sub-meta
+\newcommand{\cventry}[4]{%
+  \entrymark{\small #1}\hfill{\scriptsize\color{muted}#2}\par
+  \ifblank{#3}{}{%
+    \entrylinegap
+    {\footnotesize\itshape #3}\hfill{\scriptsize\color{muted}#4}\par
   }%
 }
 
-\newcommand{\projectentry}[5]{%
-  {\footnotesize
-    \href{#4}{\textbf{#1}\, \textcolor{accent}{\scriptsize\faIcon{link}}}
-    \hfill
-    \textcolor{muted}{#2}
-  }\par
-  \vspace{-2pt}
-
-  {\footnotesize #3}\par
-
-  \if\relax\detokenize{#5}\relax
-  \else
-    \vspace{2pt}
-    {\footnotesize
-      \color{muted}
-      \setstretch{1.08}
-      \begin{itemize}[
-        leftmargin=1.2em,
-        itemsep=1pt,
-        topsep=0pt,
-        parsep=0pt
-      ]
-        #5
-      \end{itemize}
-    }
-  \fi
-
-  \vspace{4pt}
+% #1 title, #2 authors and venue
+\newcommand{\publicationentry}[2]{%
+  \entrymark{\footnotesize #1}\par
+  \entrylinegap
+  {\scriptsize\color{muted}#2}\par
+  \cventrygap
 }
 
-\newcommand{\skillline}[2]{%
-  \item[]\hspace{-1.25em}%
-  \makebox[11em][l]{%
-    \small\textbf{#1}%
-  }%
-  {\small\color{black!70}#2}%
+% #1 name, #2 date, #3 description, #4 url (optional)
+\newcommand{\projectitem}[4]{%
+  \entrymark{\footnotesize #1}%
+  \ifblank{#4}{}{\,\href{#4}{\scriptsize\color{accent}[link]}}%
+  \hfill{\scriptsize\color{muted}#2}\par
+  \entrylinegap
+  {\footnotesize\color{muted}#3}\par
+  \cventrygap
 }
 
-\newenvironment{compactitems}
-  {\small\begin{itemize}[itemsep=0.5pt, topsep=-3pt]}
-  {\end{itemize}}
+% #1 label, #2 value
+\newcommand{\kvrow}[2]{%
+  \noindent
+  \begin{minipage}[t]{0.18\linewidth}\vspace{0pt}%
+    {\scriptsize\scshape\color{muted}\textls[45]{#1}}%
+  \end{minipage}%
+  \begin{minipage}[t]{0.80\linewidth}\vspace{0pt}%
+    {\footnotesize #2}%
+  \end{minipage}\par
+  \vspace{2pt}
+}
+
+% #1 text, #2 date; starred form drops the trailing gap
+\makeatletter
+\newcommand{\dated@line}[2]{%
+  \entrymark{\footnotesize #1}\hfill{\scriptsize\color{muted}#2}\par
+}
+\newcommand{\dated@norm}[2]{\dated@line{#1}{#2}\vspace{4pt}}
+\newcommand{\dated@tight}[2]{\dated@line{#1}{#2}}
+\newcommand{\dateditem}{\@ifstar\dated@tight\dated@norm}
+\makeatother
+
+\newcommand{\cvdetail}[1]{%
+  \entrylinegap
+  {\footnotesize\color{muted}#1}\par
+}
