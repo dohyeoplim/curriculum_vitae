@@ -1,11 +1,10 @@
 \usepackage[
-  top=0.7in,
+  top=0.45in,
   bottom=0.7in,
   left=0.68in,
   right=0.68in
 ]{geometry}
 
-\usepackage{enumitem}
 \usepackage{setspace}
 \usepackage{xcolor}
 \usepackage{etoolbox}
@@ -15,41 +14,61 @@
 
 \definecolor{accent}{HTML}{7A3B2F}
 \definecolor{muted}{HTML}{3B3733}
+\definecolor{detailgray}{cmyk}{0,0,0,0.90}
 \definecolor{rulegray}{HTML}{938B82}
 
 \hypersetup{hidelinks}
 \pagestyle{empty}
 
-\setstretch{1.04}
+\setstretch{1.07}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
 
-\newcommand{\entrylinegap}{\vspace{1.5pt}}
-\newcommand{\cventrygap}{\vspace{4pt}}
-\newcommand{\cvgroupgap}{\vspace{3pt}}
-\newcommand{\cvsectiongap}{\vspace{14pt}}
-\newcommand{\entrymark}{\leavevmode\llap{\raisebox{0.05em}{\scriptsize\textcolor{rulegray}{$\bullet$}}\hspace{5pt}}}
+\newcommand{\entrylinegap}{\vspace{0.5pt}}
+\newcommand{\cventrygap}{\par\addvspace{4pt}}
+\newcommand{\cvipgap}{\cventrygap}
+\newcommand{\cvgroupgap}{\par\addvspace{6pt}}
+\newcommand{\cvprojectgap}{\cventrygap}
+\newcommand{\cvsectiongap}{\vspace{16pt}}
+\newcommand{\cvsubsectiongap}{\vspace{1pt}}
 
-\setlist[itemize]{
-  leftmargin=1.05em,
-  itemsep=3pt,
-  topsep=1pt,
-  parsep=0pt,
-  partopsep=0pt,
-  label=\textcolor{rulegray}{\textbullet}
+% Shared text styles and inline metadata.
+\newcommand{\cvemphasis}[1]{\textsbf{#1}}
+\newcommand{\cvmetastyle}{\footnotesize\color{muted}}
+\newcommand{\cvmeta}[1]{{\cvmetastyle #1}}
+\newcommand{\cvstatus}[1]{%
+  \ifblank{#1}{}{\enspace{\cvmetastyle\itshape #1}}%
+}
+\newcommand{\cvlabel}[1]{{\footnotesize\textcolor{rulegray}{[#1]}}}
+
+% Numbered entries wrap back to the label's left edge.
+\newcommand{\cvnumberedpara}[2]{%
+  {\small\raggedright
+    \noindent\cvlabel{#1}\hspace{3pt}#2\par
+  }%
 }
 
-% #1 name, #2 tagline, #3 contacts
+% Optional URL, then #2 title, #3 date.
+\newcommand{\cvtitleline}[3][]{%
+  {\small\raggedright
+    #2\ifblank{#1}{}{\,\href{#1}{\footnotesize\color{accent}[link]}}%
+    \hfill\cvmeta{#3}\par
+  }%
+}
+
+% #1 name, #2 contacts
 \newcommand{\cvsep}{\;\textcolor{rulegray}{\textperiodcentered}\;}
 \newcommand{\cvheader}[2]{%
-  \begin{center}
-  \noindent
-  {\Huge #1}\par
-  \vspace{12pt}
-  {\footnotesize\color{muted}#2}\par
-  \textcolor{rulegray}{\rule{\linewidth}{0.5pt}}
-  \end{center}
-  \par
+  {\centering
+    {\Huge #1\par}%
+    \vspace{6pt}%
+    {\small\color{muted}#2\par}%
+    \vspace{9pt}%
+    \nointerlineskip
+    \noindent\textcolor{rulegray}{\rule{\linewidth}{0.5pt}}\par
+  }%
+  \vspace{18pt}%
+  \nointerlineskip
 }
 
 \newenvironment{cvsection}[1]{%
@@ -58,72 +77,92 @@
     \vspace{0pt}%
     \raggedright
     \setstretch{0.80}%
-    {\footnotesize\scshape\color{accent}\lsstyle #1}%
+    {\small\scshape\color{accent}\lsstyle #1\par}%
   \end{minipage}%
   \hfill
   \begin{minipage}[t]{0.81\linewidth}%
     \vspace{0pt}%
 }{%
+  \par\unskip
   \end{minipage}%
   \par
   \cvsectiongap
+  \nointerlineskip
 }
 
-\newcommand{\cvsubsection}[1]{%
-  {\scriptsize\scshape\color{muted}\textls[45]{#1}}\par
-  \vspace{3pt}
+\newenvironment{cvsubsection}[1]{%
+  {\footnotesize\sffamily\bfseries\color{muted}#1\par}%
+  \cvsubsectiongap
+}{%
+  \par
 }
 
-% #1 title, #2 meta, #3 subtitle (optional), #4 sub-meta
-\newcommand{\cventry}[4]{%
-  \entrymark{\small #1}\hfill{\scriptsize\color{muted}#2}\par
-  \ifblank{#3}{}{%
-    \entrylinegap
-    {\footnotesize\itshape #3}\hfill{\scriptsize\color{muted}#4}\par
+% Compact bullet details use a narrower indent than numbered entries.
+\newlength{\cvdetailindent}
+\setlength{\cvdetailindent}{10pt}
+\newcommand{\cvbulletpara}[1]{%
+  {\small\color{detailgray}\raggedright
+    \leftskip=\cvdetailindent
+    \noindent\llap{\makebox[\dimexpr\cvdetailindent-2pt\relax][c]{\footnotesize\textcolor{rulegray}{$\bullet$}}\hspace{2pt}}#1\par
   }%
 }
 
-% #1 title, #2 authors and venue
-\newcommand{\publicationentry}[2]{%
-  \entrymark{\footnotesize #1}\par
+\newcommand{\cvbulletdetail}[1]{%
   \entrylinegap
-  {\scriptsize\color{muted}#2}\par
+  \cvbulletpara{#1}%
+}
+
+% #1 title, #2 date, #3 subtitle
+\newcommand{\cventry}[3]{%
+  \cvtitleline{#1}{#2}%
+  \cvbulletdetail{\itshape #3}%
+}
+
+\newcounter{publication}
+
+% Optional contribution, then #2 title, #3 authors, #4 year, #5 status.
+\newcommand{\publicationentry}[5][]{%
+  \stepcounter{publication}%
+  \cvnumberedpara{\arabic{publication}}{%
+    #3. ``#2.'' #4.\cvstatus{#5}}%
+  \ifblank{#1}{}{\cvbulletdetail{#1}}%
   \cventrygap
 }
 
-% #1 name, #2 date, #3 description, #4 url (optional)
-\newcommand{\projectitem}[4]{%
-  \entrymark{\footnotesize #1}%
-  \ifblank{#4}{}{\,\href{#4}{\scriptsize\color{accent}[link]}}%
-  \hfill{\scriptsize\color{muted}#2}\par
+% Auxiliary information stays aligned with its title, without a bullet.
+\newcommand{\cvaux}[1]{%
   \entrylinegap
-  {\footnotesize\color{muted}#3}\par
-  \cventrygap
+  {\cvmetastyle\raggedright #1\par}%
 }
 
-% #1 label, #2 value
-\newcommand{\kvrow}[2]{%
-  \noindent
-  \begin{minipage}[t]{0.18\linewidth}\vspace{0pt}%
-    {\scriptsize\scshape\color{muted}\textls[45]{#1}}%
-  \end{minipage}%
-  \begin{minipage}[t]{0.80\linewidth}\vspace{0pt}%
-    {\footnotesize #2}%
-  \end{minipage}\par
-  \vspace{2pt}
+% #1 identifier, #2 title, #3 status and date
+\newcommand{\ipentry}[3]{%
+  \cvnumberedpara{#1}{#2.\cvstatus{#3}}%
+  \cvipgap
+}
+
+% Optional detail rows, then #2 title and #3 participation period.
+\newcommand{\researchproject}[3][]{%
+  \cvtitleline{#2}{#3}%
+  \ifblank{#1}{}{#1}%
+  \cvprojectgap
+}
+
+% Optional URL, then #2 name, #3 date, #4 description.
+\newcommand{\projectitem}[4][]{%
+  \cvtitleline[#1]{#2}{#3}%
+  \cvdetail{#4}%
+  \cventrygap
 }
 
 % #1 text, #2 date; starred form drops the trailing gap
 \makeatletter
-\newcommand{\dated@line}[2]{%
-  \entrymark{\footnotesize #1}\hfill{\scriptsize\color{muted}#2}\par
-}
-\newcommand{\dated@norm}[2]{\dated@line{#1}{#2}\vspace{4pt}}
-\newcommand{\dated@tight}[2]{\dated@line{#1}{#2}}
+\newcommand{\dated@norm}[2]{\cvtitleline{#1}{#2}\cventrygap}
+\newcommand{\dated@tight}[2]{\cvtitleline{#1}{#2}}
 \newcommand{\dateditem}{\@ifstar\dated@tight\dated@norm}
 \makeatother
 
 \newcommand{\cvdetail}[1]{%
   \entrylinegap
-  {\footnotesize\color{muted}#1}\par
+  {\raggedright\small\color{muted} #1\par}
 }
