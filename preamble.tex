@@ -14,6 +14,7 @@
 
 \definecolor{accent}{HTML}{7A3B2F}
 \definecolor{muted}{HTML}{3B3733}
+\definecolor{dategray}{HTML}{5B5652}
 \definecolor{detailgray}{cmyk}{0,0,0,0.90}
 \definecolor{rulegray}{HTML}{938B82}
 
@@ -52,7 +53,7 @@
 \newcommand{\cvtitleline}[3][]{%
   {\small\raggedright
     #2\ifblank{#1}{}{\,\href{#1}{\footnotesize\color{accent}[link]}}%
-    \hfill\cvmeta{#3}\par
+    \hfill\cvmeta{\textcolor{dategray}{#3}}\par
   }%
 }
 
@@ -61,7 +62,7 @@
 \newcommand{\cvheader}[2]{%
   {\centering
     {\Huge #1\par}%
-    \vspace{6pt}%
+    \vspace{8pt}%
     {\small\color{muted}#2\par}%
     \vspace{9pt}%
     \nointerlineskip
@@ -116,6 +117,21 @@
 \newcommand{\cventry}[3]{%
   \cvtitleline{#1}{#2}%
   \cvbulletdetail{\itshape #3}%
+}
+
+% Each lab keeps its role and projects together.
+\newenvironment{cvlab}[3]{%
+  \cventry{\cvemphasis{#1}}{#2}{#3}%
+}{%
+  \par
+}
+
+% Project headings align with the lab entries.
+\newenvironment{cvlabprojects}[1][Research Projects]{%
+  \cvgroupgap
+  \begin{cvsubsection}{#1}%
+}{%
+  \end{cvsubsection}%
 }
 
 \newcounter{publication}
