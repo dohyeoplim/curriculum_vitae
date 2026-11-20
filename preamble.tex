@@ -26,7 +26,7 @@
 \setlength{\parskip}{0pt}
 
 \newcommand{\entrylinegap}{\vspace{0.5pt}}
-\newcommand{\cventrygap}{\par\addvspace{4pt}}
+\newcommand{\cventrygap}{\par\addvspace{5pt}}
 \newcommand{\cvipgap}{\cventrygap}
 \newcommand{\cvgroupgap}{\par\addvspace{6pt}}
 \newcommand{\cvprojectgap}{\cventrygap}
@@ -151,9 +151,22 @@
   {\cvmetastyle\raggedright #1\par}%
 }
 
-% #1 identifier, #2 title, #3 status and date
-\newcommand{\ipentry}[3]{%
-  \cvnumberedpara{#1}{#2.\cvstatus{#3}}%
+% Optional date, then #2 identifier, #3 title, #4 status.
+\newlength{\cvipdatewidth}
+\newcommand{\ipentry}[4][]{%
+  \ifblank{#1}{%
+    \cvnumberedpara{#2}{#3.\cvstatus{#4}}%
+  }{%
+    \settowidth{\cvipdatewidth}{{\cvmetastyle #1}}%
+    {\small\raggedright
+      \parshape 2
+        0pt \dimexpr\linewidth-\cvipdatewidth-8pt\relax
+        0pt \linewidth
+      \noindent
+      \makebox[0pt][l]{\makebox[\linewidth][r]{\cvmeta{\textcolor{dategray}{#1}}}}%
+      \cvlabel{#2}\hspace{3pt}#3.\cvstatus{#4}\par
+    }%
+  }%
   \cvipgap
 }
 
